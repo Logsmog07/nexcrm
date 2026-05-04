@@ -129,6 +129,7 @@ const env = {
     if (connectionString) {
       return {
         connectionString,
+        family: 4,
         ssl,
       };
     }
@@ -139,6 +140,7 @@ const env = {
       database: process.env.DB_NAME || "crm_db",
       password: process.env.DB_PASSWORD || "Param@123",
       port: Number(process.env.DB_PORT || 5432),
+      family: 4,
       ssl,
     };
   })(),
