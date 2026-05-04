@@ -77,7 +77,7 @@ export function LoginPage() {
       } else if (status === 403) {
         toast.error(apiMessage || "This account cannot sign in right now");
       } else if (!status) {
-        toast.error("Cannot reach the server. Please ensure backend is running on port 3001.");
+        toast.error("Cannot reach the server. Please try again in a moment.");
       } else {
         toast.error(apiMessage || "Unable to sign in. Please try again.");
       }
