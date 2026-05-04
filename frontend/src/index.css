@@ -1,0 +1,274 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: "Inter", sans-serif;
+  color-scheme: light;
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --bg-base: #f3f6fb;
+  --bg-card: #ffffff;
+  --border: #d7e0ec;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --sidebar-bg: #f9fbff;
+  --sidebar-active: #e5ecff;
+  --radius-shell: 34px;
+  --radius-panel: 28px;
+  --focus-outline: color-mix(in srgb, var(--primary) 48%, transparent);
+  --focus-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 20%, transparent);
+  --page-enter-duration: 360ms;
+  --page-enter-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* Compatibility aliases to keep current UI stable during redesign rollout. */
+  --accent: var(--primary);
+  --accent-strong: var(--primary-hover);
+  --accent-soft: color-mix(in srgb, var(--primary) 18%, transparent);
+  --panel: var(--bg-card);
+  --panel-solid: var(--bg-card);
+  --panel-elevated: var(--bg-card);
+  --surface: #edf2fb;
+  --surface-strong: #e4ebf8;
+  --border-soft: #dbe4f2;
+  --border-strong: #c8d3e5;
+  --text-muted: #64748b;
+  --shadow-panel: 0 12px 32px rgba(15, 23, 42, 0.08);
+  --shadow-soft: 0 6px 20px rgba(15, 23, 42, 0.06);
+  --ring: color-mix(in srgb, var(--primary) 18%, transparent);
+  --sidebar-card-bg: #f7faff;
+  --sidebar-surface: #f4f8ff;
+  --sidebar-inner-surface: var(--surface);
+  --shell-panel-bg: var(--bg-card);
+  --card-gradient-bg: var(--bg-card);
+  --overlay-bg: rgba(15, 23, 42, 0.52);
+  --overlay-blur: blur(8px);
+  --empty-bg: var(--bg-card);
+  --empty-border: var(--border);
+  --chart-grid: #e5e7eb;
+  --chart-axis: #94a3b8;
+  --chart-tooltip-bg: #ffffff;
+  --chart-tooltip-border: #e5e7eb;
+  --chart-label: var(--text-primary);
+  --badge-success-bg: color-mix(in srgb, var(--success) 15%, transparent);
+  --badge-success-text: #047857;
+  --badge-success-ring: color-mix(in srgb, var(--success) 24%, transparent);
+  --badge-warning-bg: color-mix(in srgb, var(--warning) 16%, transparent);
+  --badge-warning-text: #b45309;
+  --badge-warning-ring: color-mix(in srgb, var(--warning) 24%, transparent);
+  --badge-danger-bg: color-mix(in srgb, var(--danger) 16%, transparent);
+  --badge-danger-text: #b91c1c;
+  --badge-danger-ring: color-mix(in srgb, var(--danger) 24%, transparent);
+  --badge-info-bg: color-mix(in srgb, var(--primary) 14%, transparent);
+  --badge-info-text: #4338ca;
+  --badge-info-ring: color-mix(in srgb, var(--primary) 24%, transparent);
+  --error-banner-bg: #fef2f2;
+  --error-banner-border: #fecaca;
+  --error-banner-text: #991b1b;
+}
+
+.dark {
+  color-scheme: dark;
+  --bg-base: #0f172a;
+  --bg-card: #1e293b;
+  --border: #334155;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --sidebar-bg: #1e293b;
+  --sidebar-active: #312e81;
+  --focus-outline: color-mix(in srgb, var(--primary) 60%, transparent);
+  --focus-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 28%, transparent);
+
+  --panel: var(--bg-card);
+  --panel-solid: var(--bg-card);
+  --panel-elevated: #243347;
+  --surface: #233248;
+  --surface-strong: #2a3b52;
+  --border-soft: var(--border);
+  --border-strong: var(--border);
+  --text-muted: var(--text-secondary);
+  --shadow-panel: 0 1px 2px rgba(15, 23, 42, 0.55);
+  --shadow-soft: 0 1px 2px rgba(15, 23, 42, 0.45);
+  --ring: color-mix(in srgb, var(--primary) 30%, transparent);
+  --sidebar-card-bg: var(--sidebar-bg);
+  --sidebar-surface: #223247;
+  --sidebar-inner-surface: #1b283a;
+  --shell-panel-bg: var(--bg-card);
+  --card-gradient-bg: var(--bg-card);
+  --overlay-bg: rgba(2, 6, 23, 0.62);
+  --overlay-blur: blur(10px);
+  --empty-bg: #243347;
+  --empty-border: var(--border);
+  --chart-grid: #334155;
+  --chart-axis: #94a3b8;
+  --chart-tooltip-bg: #0f172a;
+  --chart-tooltip-border: #334155;
+  --chart-label: var(--text-primary);
+  --badge-success-bg: color-mix(in srgb, var(--success) 20%, transparent);
+  --badge-success-text: #6ee7b7;
+  --badge-success-ring: color-mix(in srgb, var(--success) 30%, transparent);
+  --badge-warning-bg: color-mix(in srgb, var(--warning) 20%, transparent);
+  --badge-warning-text: #fcd34d;
+  --badge-warning-ring: color-mix(in srgb, var(--warning) 30%, transparent);
+  --badge-danger-bg: color-mix(in srgb, var(--danger) 20%, transparent);
+  --badge-danger-text: #fca5a5;
+  --badge-danger-ring: color-mix(in srgb, var(--danger) 30%, transparent);
+  --badge-info-bg: color-mix(in srgb, var(--primary) 20%, transparent);
+  --badge-info-text: #c7d2fe;
+  --badge-info-ring: color-mix(in srgb, var(--primary) 30%, transparent);
+  --error-banner-bg: #3b1014;
+  --error-banner-border: #7f1d1d;
+  --error-banner-text: #fecaca;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--focus-outline);
+  outline-offset: 2px;
+  box-shadow: var(--focus-shadow);
+}
+
+.app-background {
+  background:
+    radial-gradient(900px 420px at -8% -8%, color-mix(in srgb, var(--primary) 16%, transparent), transparent 60%),
+    radial-gradient(760px 340px at 108% -2%, color-mix(in srgb, #0ea5e9 14%, transparent), transparent 58%),
+    var(--bg-base);
+}
+
+.dark .app-background {
+  background: var(--bg-base);
+}
+
+.auth-background {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--primary) 7%, var(--bg-base)), var(--bg-base));
+}
+
+.dark .auth-background {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--primary) 12%, var(--bg-base)), var(--bg-base));
+}
+
+.crm-shell-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--border) 70%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--border) 70%, transparent) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.ui-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.995);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes stagger-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ux-page-enter {
+  animation: page-enter var(--page-enter-duration) var(--page-enter-ease) both;
+}
+
+.ux-stagger > * {
+  animation: stagger-reveal 300ms var(--page-enter-ease) both;
+}
+
+.ux-stagger > *:nth-child(1) {
+  animation-delay: 40ms;
+}
+
+.ux-stagger > *:nth-child(2) {
+  animation-delay: 80ms;
+}
+
+.ux-stagger > *:nth-child(3) {
+  animation-delay: 120ms;
+}
+
+.ux-stagger > *:nth-child(4) {
+  animation-delay: 160ms;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: color-mix(in srgb, var(--surface) 60%, transparent);
+}
+
+*::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--accent) 28%, var(--surface));
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--accent) 40%, var(--surface-strong));
+  background-clip: padding-box;
+}

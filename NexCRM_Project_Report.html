@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>NexCRM Project Report</title>
+  <style>
+    body {
+      font-family: "Times New Roman", serif;
+      font-size: 12pt;
+      line-height: 1.5;
+      margin: 1in 1in 1in 1.25in;
+      text-align: justify;
+    }
+    h1.chapter {
+      font-size: 16pt;
+      text-align: center;
+      margin: 12pt 0;
+      page-break-before: always;
+    }
+    h2.section {
+      font-size: 14pt;
+      text-align: left;
+      text-decoration: underline;
+      margin: 6pt 0;
+    }
+    h3.subsection {
+      font-size: 12pt;
+      text-align: left;
+      margin: 6pt 0;
+      font-weight: bold;
+    }
+    .cover {
+      text-align: center;
+      page-break-after: always;
+    }
+    .cover h1 {
+      font-size: 20pt;
+      margin: 12pt 0;
+    }
+    .toc, .lof, .lot {
+      page-break-after: always;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 8pt 0;
+    }
+    th, td {
+      border: 1px solid #000;
+      padding: 6px;
+      vertical-align: top;
+    }
+    pre {
+      font-family: "Courier New", monospace;
+      font-size: 10pt;
+      white-space: pre-wrap;
+      border: 1px solid #000;
+      padding: 8px;
+      margin: 8pt 0;
+    }
+    .caption {
+      text-align: center;
+      font-style: italic;
+      margin-bottom: 8pt;
+    }
+    .figure {
+      page-break-inside: avoid;
+      margin: 10pt 0 14pt;
+      text-align: center;
+    }
+    .figure img {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #000;
+    }
+    .ref li {
+      margin-bottom: 6pt;
+    }
+  </style>
+</head>
+<body>
+  <div class="cover">
+    <p><b>PROJECT REPORT</b></p>
+    <p>Submitted under Database Management Course (CIC-210)</p>
+    <p>OF</p>
+    <p><b>BACHELOR OF TECHNOLOGY</b></p>
+    <p>IN</p>
+    <p><b>COMPUTER SCIENCE AND ENGINEERING</b></p>
+    <br />
+    <h1>NexCRM: CRM Analytics and Sales Intelligence System</h1>
+    <br />
+    <p><b>Submitted By</b></p>
+    <p>[Student Name] - [Roll Number]</p>
+    <p>[Student Name] - [Roll Number]</p>
+    <p>4th Semester, C-Section</p>
+    <br />
+    <p><b>Under the Supervision of</b></p>
+    <p>Dr. Monika Bansal</p>
+    <br />
+    <p><b>VIVEKANANDA INSTITUTE OF PROFESSIONAL STUDIES - TECHNICAL CAMPUS</b></p>
+    <p>Grade A++ Accredited Institution by NAAC</p>
+    <p>NBA Accredited for MCA Programme</p>
+    <p>Affiliated to GGSIP University, Delhi</p>
+    <p>An ISO 9001:2015 Certified Institution</p>
+    <p>Session: 2024-2028</p>
+  </div>
+
+  <div class="lof">
+    <h1 class="chapter" style="page-break-before: auto;">LIST OF FIGURES</h1>
+    <p>Figure 1: High-Level System Architecture</p>
+    <p>Figure 2: Authentication and Role-Based Access Flow</p>
+    <p>Figure 3: Core ER Model of NexCRM Database (Simplified)</p>
+    <p>Figure 4: Isolated Developer Console Architecture</p>
+    <p>Figure 5: QA Validation Pipeline</p>
+    <p>Figure 6: Backend Code Distribution (JS Files)</p>
+    <p>Figure 7: Seeded Deal Pipeline Value by Stage</p>
+    <p>Figure 8: NexCRM UI Screenshot (Login and Demo Accounts)</p>
+  </div>
+
+  <div class="lot">
+    <h1 class="chapter" style="page-break-before: auto;">LIST OF TABLES</h1>
+    <p>Table 1: Hardware and Software Requirements ................................... iii</p>
+    <p>Table 2: Core Entity Attributes ............................................... iii</p>
+    <p>Table 3: Normalization Summary (1NF to 3NF) ................................... iv</p>
+    <p>Table 4: QA Results and Verification Matrix .................................... iv</p>
+  </div>
+
+  <div class="toc">
+    <h1 class="chapter" style="page-break-before: auto;">TABLE OF CONTENTS</h1>
+    <p>Abstract</p>
+    <p>Chapter 1: Introduction</p>
+    <p>Chapter 2: Related Work</p>
+    <p>Chapter 3: Problem Statement and Objectives</p>
+    <p>Chapter 4: Project Analysis and Design</p>
+    <p>4.1 Hardware and Software Requirement Specifications</p>
+    <p>4.2 ER Diagrams</p>
+    <p>4.3 Table Creation Scripts and Database Schema</p>
+    <p>4.4 Normalization (up to 3NF)</p>
+    <p>4.5 Sample Data</p>
+    <p>Chapter 5: Work and Methodology</p>
+    <p>Chapter 6: Results and Discussion</p>
+    <p>Chapter 7: Conclusion</p>
+    <p>Chapter 8: Future Scope of Work</p>
+    <p>References</p>
+    <p>Coding</p>
+  </div>
+
+  <h1 class="chapter" style="page-break-before: auto;">ABSTRACT</h1>
+  <p>
+    NexCRM is a full-stack Customer Relationship Management (CRM) platform developed for structured sales execution,
+    customer lifecycle tracking, and analytics-driven decision-making. The project implements a PostgreSQL-backed data
+    model, an Express REST API, and a React frontend dashboard. Core modules include authentication and role-based access
+    control, lead management, customer conversion, deal pipeline tracking, activity scheduling, notifications, and analytics.
+  </p>
+  <p>
+    The system also includes an isolated Developer Console with dedicated authentication, schema exploration, relationship
+    visualization, read-only SQL query capabilities, downloadable schema documentation (JSON/CSV/ZIP), and a secure signed-up
+    users directory that excludes password data. The final implementation follows database normalization principles up to
+    Third Normal Form (3NF), supports multi-tenant company workspaces, and was validated through linting, production build
+    verification, backend checks, API smoke tests, and browser automation.
+  </p>
+
+  <h1 class="chapter">CHAPTER 1: INTRODUCTION</h1>
+  <p>
+    Customer-facing organizations require an integrated system to capture prospects, nurture opportunities, convert leads,
+    and analyze sales performance. Many teams rely on disconnected tools, resulting in duplicated data, inconsistent updates,
+    weak auditability, and delayed reporting. NexCRM addresses these issues through a centralized database design and a
+    modular web application architecture.
+  </p>
+  <p>
+    This project was built as part of the Database Management course with a strong focus on schema quality, referential
+    integrity, indexing strategy, and practical normalization. The platform provides role-specific workflows for platform
+    administrators, company administrators, managers, and sales representatives while maintaining secure data boundaries.
+  </p>
+
+  <h2 class="section">1.1 Motivation</h2>
+  <p>
+    The key motivation was to design and implement a realistic DBMS-backed application where theoretical concepts such as
+    entity relationships, constraints, normalization, and query optimization are applied in production-like scenarios.
+  </p>
+
+  <h2 class="section">1.2 Scope</h2>
+  <p>
+    The scope includes data modeling, API development, frontend implementation, testing, and deployment readiness checks.
+    It excludes payment gateway integrations and external CRM synchronization in the current phase.
+  </p>
+
+  <h2 class="section">1.3 High-Level Architecture</h2>
+  <p>
+    The system follows a 3-tier web architecture. The CRM application and the isolated Developer Console are separate
+    frontend entry points that communicate with backend routes over HTTPS while sharing a single PostgreSQL database.
+  </p>
+  <div class="figure">
+    <img src="report-assets/fig1_architecture.png" alt="Figure 1: High-Level System Architecture" />
+    <p class="caption">Figure 1: High-Level System Architecture</p>
+  </div>
+
+  <h1 class="chapter">CHAPTER 2: RELATED WORK</h1>
+  <p>
+    Existing CRM systems such as Salesforce, HubSpot, and Zoho CRM provide robust enterprise capabilities but are often
+    complex and expensive for learning-focused or small-team contexts. Academic prototypes typically demonstrate basic CRUD
+    operations but rarely include strong role controls, analytics, and operational observability.
+  </p>
+  <p>
+    NexCRM combines practical usability and rigorous database design. Unlike basic prototypes, it includes: (a) multi-tenant
+    company segmentation, (b) audit-log support, (c) user settings persistence, (d) quality assurance scripts, and
+    (e) an isolated developer database console for controlled introspection.
+  </p>
+
+  <h1 class="chapter">CHAPTER 3: PROBLEM STATEMENT AND OBJECTIVES</h1>
+  <h2 class="section">3.1 Problem Statement</h2>
+  <p>
+    Design and implement a reliable CRM system where sales and customer lifecycle operations can be handled through a
+    normalized relational schema and role-aware application layer, while ensuring performance, security, and maintainability.
+  </p>
+
+  <h2 class="section">3.2 Objectives</h2>
+  <ul>
+    <li>Design a PostgreSQL schema with constraints, indexes, and normalized entities up to 3NF.</li>
+    <li>Implement secure authentication and role-based authorization using JWT.</li>
+    <li>Support lead, customer, deal, activity, and notification workflows.</li>
+    <li>Provide analytics and dashboard visualizations for operational insight.</li>
+    <li>Enable multi-tenant data scoping by company workspace.</li>
+    <li>Build an isolated Developer Console for safe schema/data observability.</li>
+    <li>Validate stability through automated QA and browser/API smoke checks.</li>
+  </ul>
+
+  <h1 class="chapter">CHAPTER 4: PROJECT ANALYSIS AND DESIGN</h1>
+
+  <h2 class="section">4.1 Hardware and Software Requirement Specifications</h2>
+  <table>
+    <tr><th>Category</th><th>Requirement</th></tr>
+    <tr><td>Processor</td><td>Intel/AMD dual-core or above</td></tr>
+    <tr><td>RAM</td><td>Minimum 8 GB (16 GB recommended)</td></tr>
+    <tr><td>Storage</td><td>At least 2 GB free space</td></tr>
+    <tr><td>Operating System</td><td>Windows 10+/macOS/Linux</td></tr>
+    <tr><td>Runtime</td><td>Node.js 20+, npm</td></tr>
+    <tr><td>Database</td><td>PostgreSQL 14+</td></tr>
+    <tr><td>Frontend Stack</td><td>React, Vite, Tailwind CSS, Redux Toolkit, Axios, Recharts</td></tr>
+    <tr><td>Backend Stack</td><td>Node.js, Express, pg, jsonwebtoken, bcrypt, dotenv</td></tr>
+    <tr><td>Testing</td><td>ESLint, Playwright, custom QA scripts</td></tr>
+  </table>
+
+  <h2 class="section">4.2 ER Diagrams</h2>
+  <p>
+    Figure 3 represents a simplified ER model of the NexCRM database. Primary entities include users, companies, leads,
+    customers, deals, activities, notifications, audit_logs, and user_settings. Key relationships are summarized below.
+  </p>
+
+  <div class="figure">
+    <img src="report-assets/fig3_er_model.png" alt="Figure 3: Core ER Model of NexCRM Database (Simplified)" />
+    <p class="caption">Figure 3: Core ER Model of NexCRM Database (Simplified)</p>
+  </div>
+
+  <ul>
+    <li>leads.assigned_to and leads.created_by reference users.</li>
+    <li>customers.owner_id references users; customers.lead_id references leads.</li>
+    <li>deals map to either customer or lead and also to owner users.</li>
+    <li>activities can reference lead/customer/deal and always reference a user.</li>
+    <li>notifications reference users and optional company scope.</li>
+    <li>multi-tenant foreign keys (company_id) segment operational records by workspace.</li>
+  </ul>
+
+  <h2 class="section">4.3 Table Creation Scripts and Database Schema</h2>
+  <p>
+    The schema was created through versioned SQL migrations:
+    001_init_crm_schema.sql, 002_seed_dev_data.sql, 003_multitenant_workspace.sql,
+    004_seed_company_hierarchy.sql, 005_audit_logs.sql, 006_audit_retention_and_indexes.sql,
+    and 007_user_settings.sql.
+  </p>
+
+  <h3 class="subsection">Sample table creation snippets</h3>
+  <pre>CREATE TABLE IF NOT EXISTS users (
+  id BIGSERIAL PRIMARY KEY,
+  full_name VARCHAR(120) NOT NULL,
+  email CITEXT NOT NULL UNIQUE,
+  password_hash TEXT NOT NULL,
+  role user_role_enum NOT NULL DEFAULT 'sales_rep',
+  is_active BOOLEAN NOT NULL DEFAULT TRUE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS deals (
+  id BIGSERIAL PRIMARY KEY,
+  title VARCHAR(180) NOT NULL,
+  customer_id BIGINT REFERENCES customers(id) ON DELETE SET NULL,
+  lead_id BIGINT REFERENCES leads(id) ON DELETE SET NULL,
+  owner_id BIGINT REFERENCES users(id) ON DELETE SET NULL,
+  stage deal_stage_enum NOT NULL DEFAULT 'discovery',
+  status deal_status_enum NOT NULL DEFAULT 'open',
+  value NUMERIC(12, 2) NOT NULL DEFAULT 0 CHECK (value >= 0),
+  probability NUMERIC(5, 2) NOT NULL DEFAULT 0 CHECK (probability BETWEEN 0 AND 100)
+);
+</pre>
+
+  <h3 class="subsection">Multi-tenant extension snippet</h3>
+  <pre>ALTER TABLE users
+  ADD COLUMN IF NOT EXISTS platform_role platform_role_enum,
+  ADD COLUMN IF NOT EXISTS company_id BIGINT REFERENCES companies(id) ON DELETE SET NULL,
+  ADD COLUMN IF NOT EXISTS company_role company_role_enum,
+  ADD COLUMN IF NOT EXISTS manager_id BIGINT REFERENCES users(id) ON DELETE SET NULL;
+
+ALTER TABLE leads ADD COLUMN IF NOT EXISTS company_id BIGINT REFERENCES companies(id) ON DELETE CASCADE;
+ALTER TABLE customers ADD COLUMN IF NOT EXISTS company_id BIGINT REFERENCES companies(id) ON DELETE CASCADE;
+ALTER TABLE deals ADD COLUMN IF NOT EXISTS company_id BIGINT REFERENCES companies(id) ON DELETE CASCADE;
+</pre>
+
+  <h2 class="section">4.4 Normalization (up to 3NF)</h2>
+  <table>
+    <tr><th>Normalization Stage</th><th>Applied in NexCRM</th></tr>
+    <tr>
+      <td>1NF</td>
+      <td>All tables use atomic attributes; repeating groups removed. Example: activities are independent rows, not comma-separated values in other entities.</td>
+    </tr>
+    <tr>
+      <td>2NF</td>
+      <td>Non-key attributes depend on full primary keys. Surrogate keys (BIGSERIAL) are used and dependent attributes are stored with their owner entities only.</td>
+    </tr>
+    <tr>
+      <td>3NF</td>
+      <td>Transitive dependencies minimized. Example: company attributes are stored in companies, user profile in users, and deal/customer facts are referenced through foreign keys rather than duplicated.</td>
+    </tr>
+  </table>
+
+  <h3 class="subsection">Normalization examples</h3>
+  <ul>
+    <li>Lead-to-customer conversion separates prospect and customer lifecycle while preserving historical traceability.</li>
+    <li>Deal ownership references users via owner_id rather than repeating user profile fields.</li>
+    <li>Notification metadata is isolated in notifications with JSONB, avoiding unrelated columns in transactional tables.</li>
+  </ul>
+
+  <h2 class="section">4.5 Sample Data</h2>
+  <p>
+    Seed scripts provide demonstration data including admin, manager, and sales users; sample leads and converted customers;
+    multiple deals across discovery/proposal/negotiation stages; and activity/notification records.
+  </p>
+
+  <pre>Demo users:
+admin@crm.local      Password123!
+manager@crm.local    Password123!
+sales@crm.local      Password123!
+
+Sample entities seeded:
+- leads: Ava Thompson, Liam Carter, Sophia Reed
+- customer: Noah Bennett (AtlasOps)
+- deals: AtlasOps Renewal Expansion, Northstar Enterprise Pilot, Brightcore Starter Rollout
+</pre>
+
+  <h1 class="chapter">CHAPTER 5: WORK AND METHODOLOGY</h1>
+  <h2 class="section">5.1 Development Methodology</h2>
+  <p>
+    An iterative and test-driven implementation strategy was followed:
+  </p>
+  <ol>
+    <li>Requirement analysis and data model planning.</li>
+    <li>Schema implementation via migration scripts.</li>
+    <li>Backend API construction (controllers, services, repositories).</li>
+    <li>Frontend integration with route-protected role-based views.</li>
+    <li>Developer Console isolation with dedicated JWT secret and access key.</li>
+    <li>Continuous QA execution and bug fixing.</li>
+  </ol>
+
+  <p>
+    The Developer Console is designed to be isolated from the main CRM user flows while still enabling controlled
+    observability for schema exploration and read-only data access.
+  </p>
+  <div class="figure">
+    <img src="report-assets/fig4_dev_console_arch.png" alt="Figure 4: Isolated Developer Console Architecture" />
+    <p class="caption">Figure 4: Isolated Developer Console Architecture</p>
+  </div>
+
+  <h2 class="section">5.2 Security Methodology</h2>
+  <ul>
+    <li>JWT authentication for primary app users.</li>
+    <li>Dedicated dev-console token, secret, and auth endpoint.</li>
+    <li>Rate limiting on authentication endpoints.</li>
+    <li>Read-only SQL gate for developer query runner.</li>
+    <li>Sensitive column masking (password/password_hash).</li>
+    <li>Role-based access checks for analytics and management endpoints.</li>
+  </ul>
+
+  <div class="figure">
+    <img src="report-assets/fig2_auth_rbac_flow.png" alt="Figure 2: Authentication and Role-Based Access Flow" />
+    <p class="caption">Figure 2: Authentication and Role-Based Access Flow</p>
+  </div>
+
+  <h2 class="section">5.3 Testing Methodology</h2>
+  <p>
+    Validation was done through layered QA scripts:
+  </p>
+  <ul>
+    <li>qa:preflight for health and entry-point checks.</li>
+    <li>qa:lint and qa:build for frontend quality gates.</li>
+    <li>qa:backend:check for backend syntax validation.</li>
+    <li>qa:e2e via Playwright for browser workflow checks.</li>
+    <li>qa:api for role-based backend smoke verification.</li>
+    <li>Targeted smoke for developer console auth/session/users/schema flows.</li>
+  </ul>
+
+  <div class="figure">
+    <img src="report-assets/fig5_qa_pipeline.png" alt="Figure 5: QA Validation Pipeline" />
+    <p class="caption">Figure 5: QA Validation Pipeline</p>
+  </div>
+
+  <h1 class="chapter">CHAPTER 6: RESULTS AND DISCUSSION</h1>
+  <h2 class="section">6.1 Functional Results</h2>
+  <ul>
+    <li>Role-aware CRM workflows for leads, customers, deals, activities, and notifications are operational.</li>
+    <li>Analytics dashboard and reporting views are available for authorized roles.</li>
+    <li>Multi-tenant company scoping works through company_id-based filtering and authorization logic.</li>
+    <li>Developer Console provides schema exploration, ER canvas, exports (JSON/CSV/ZIP), and secure user listing.</li>
+  </ul>
+
+  <div class="figure">
+    <img src="frontend-page.png" alt="Figure 8: NexCRM UI Screenshot (Login and Demo Accounts)" />
+    <p class="caption">Figure 8: NexCRM UI Screenshot (Login and Demo Accounts)</p>
+  </div>
+
+  <h2 class="section">6.2 Verification Summary</h2>
+  <table>
+    <tr><th>Check</th><th>Status</th><th>Observation</th></tr>
+    <tr><td>Health Preflight</td><td>Pass</td><td>Backend /health and frontend /login reachable</td></tr>
+    <tr><td>Frontend Lint</td><td>Pass</td><td>No blocking lint errors</td></tr>
+    <tr><td>Frontend Build</td><td>Pass</td><td>Production build generated successfully</td></tr>
+    <tr><td>E2E Browser Smoke</td><td>Pass</td><td>Navigation and dashboard interactions validated</td></tr>
+    <tr><td>API Smoke (Admin/Manager)</td><td>Pass</td><td>Critical protected endpoints return expected status</td></tr>
+    <tr><td>Dev Console Users Endpoint</td><td>Pass</td><td>No password field exposed in payload</td></tr>
+  </table>
+
+  <p>
+    The following plots provide additional technical evidence derived from the repository structure and seeded data.
+  </p>
+
+  <div class="figure">
+    <img src="report-assets/fig6_backend_code_distribution.png" alt="Figure 6: Backend Code Distribution (JS Files)" />
+    <p class="caption">Figure 6: Backend Code Distribution (JS Files)</p>
+  </div>
+
+  <div class="figure">
+    <img src="report-assets/fig7_seeded_pipeline_value.png" alt="Figure 7: Seeded Deal Pipeline Value by Stage" />
+    <p class="caption">Figure 7: Seeded Deal Pipeline Value by Stage</p>
+  </div>
+
+  <h2 class="section">6.3 Discussion</h2>
+  <p>
+    The final architecture demonstrates that DBMS concepts can be applied to a practical product-grade application while
+    preserving code modularity and operational safety. Isolation of the developer console reduced security coupling with the
+    primary CRM authentication flow. Integration of QA scripts significantly reduced regression risk during rapid feature
+    additions.
+  </p>
+
+  <h1 class="chapter">CHAPTER 7: CONCLUSION</h1>
+  <p>
+    NexCRM successfully fulfills the objectives of the Database Management project by combining normalized relational schema
+    design with a complete end-to-end web application. The system demonstrates correct usage of keys, constraints,
+    normalization, indexing, and role-bound access controls. The implemented modules and QA validations indicate the project
+    is stable, extensible, and aligned with practical CRM requirements.
+  </p>
+  <p>
+    The dedicated developer portal and reporting features add strong educational and maintenance value by enabling secure
+    visibility into schema and data behavior without exposing sensitive credentials.
+  </p>
+
+  <h1 class="chapter">CHAPTER 8: FUTURE SCOPE OF WORK</h1>
+  <ul>
+    <li>Advanced predictive analytics and lead scoring using ML models.</li>
+    <li>Workflow automation for reminders, escalations, and SLA tracking.</li>
+    <li>Comprehensive export/import pipelines and third-party CRM connectors.</li>
+    <li>Granular audit visualization dashboards with anomaly alerts.</li>
+    <li>Database performance monitoring dashboard and query-plan advisor.</li>
+    <li>Fine-grained field-level access policies and row-level security enhancement.</li>
+    <li>Deployment hardening for cloud-native production hosting.</li>
+  </ul>
+
+  <h1 class="chapter">REFERENCES</h1>
+  <ol class="ref">
+    <li>[1] PostgreSQL Global Development Group, "PostgreSQL 16 Documentation," 2024. [Online]. Available: https://www.postgresql.org/docs/</li>
+    <li>[2] Express.js, "Express - Node.js web application framework," 2024. [Online]. Available: https://expressjs.com/</li>
+    <li>[3] React Team, "React Documentation," 2024. [Online]. Available: https://react.dev/</li>
+    <li>[4] Redux Team, "Redux Toolkit Documentation," 2024. [Online]. Available: https://redux-toolkit.js.org/</li>
+    <li>[5] Vite Team, "Vite Guide," 2024. [Online]. Available: https://vitejs.dev/guide/</li>
+    <li>[6] Playwright Team, "Playwright Documentation," 2024. [Online]. Available: https://playwright.dev/docs/intro</li>
+    <li>[7] OpenJS Foundation, "Node.js Documentation," 2024. [Online]. Available: https://nodejs.org/docs/latest/api/</li>
+    <li>[8] Institute of Electrical and Electronics Engineers, "IEEE Reference Guide," 2024. [Online]. Available: https://ieeeauthorcenter.ieee.org/</li>
+  </ol>
+
+  <h1 class="chapter">CODING</h1>
+  <h2 class="section">A. Important Commands</h2>
+  <pre>npm install
+npm run server:dev
+npm run dev --prefix frontend -- --host 127.0.0.1 --port 5173 --strictPort
+npm run qa:full
+</pre>
+
+  <h2 class="section">B. Project Structure Snapshot</h2>
+  <pre>backend/
+  src/
+    config/ controllers/ middleware/ repositories/ routes/ services/ utils/
+    db/migrations/
+frontend/
+  src/
+    api/ components/ features/ pages/ router/ store/ styles/
+</pre>
+
+  <h2 class="section">C. Representative Backend Route Snippet</h2>
+  <pre>router.get('/users', catchAsync(async (req, res) => {
+  const data = await devConsoleService.listSignedUpUsers({
+    search: req.query.search,
+    isActive: req.query.isActive,
+    companyId: req.query.companyId,
+  });
+  res.json({ success: true, data });
+}));
+</pre>
+
+  <h2 class="section">D. Declaration</h2>
+  <p>
+    This report content is prepared for the NexCRM Database Management project and should be reviewed and finalized with
+    student-specific details (names, roll numbers, screenshots, page numbering adjustments, and signatures) before final
+    institutional submission.
+  </p>
+</body>
+</html>
