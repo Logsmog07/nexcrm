@@ -84,7 +84,13 @@ DB_NAME=crm_db
 DB_PASSWORD=postgres
 DB_PORT=5432
 DB_SSL=false
+
+# Production (Supabase/Vercel): use a single connection string instead of DB_*.
+# DATABASE_URL=postgresql://USER:PASSWORD@HOST:5432/postgres?sslmode=require
 ```
+
+When deploying the backend to Vercel, set `DATABASE_URL` in Vercel Project → Settings → Environment Variables.
+Do not commit your real `.env` to GitHub.
 
 Developer portal env values (optional):
 

@@ -116,17 +116,32 @@ const env = {
       365
     ),
   },
-  db: {
-    user: process.env.DB_USER || "postgres",
-    host: process.env.DB_HOST || "localhost",
-    database: process.env.DB_NAME || "crm_db",
-    password: process.env.DB_PASSWORD || "Param@123",
-    port: Number(process.env.DB_PORT || 5432),
-    ssl:
-      process.env.DB_SSL === "true"
-        ? { rejectUnauthorized: false }
-        : false,
-  },
+  db: (() => {
+    const connectionString =
+      process.env.DATABASE_URL ||
+      process.env.POSTGRES_URL ||
+      process.env.POSTGRES_PRISMA_URL ||
+      "";
+
+    const sslEnabled = parseBoolean(process.env.DB_SSL, isProduction);
+    const ssl = sslEnabled ? { rejectUnauthorized: false } : false;
+
+    if (connectionString) {
+      return {
+        connectionString,
+        ssl,
+      };
+    }
+
+    return {
+      user: process.env.DB_USER || "postgres",
+      host: process.env.DB_HOST || "localhost",
+      database: process.env.DB_NAME || "crm_db",
+      password: process.env.DB_PASSWORD || "Param@123",
+      port: Number(process.env.DB_PORT || 5432),
+      ssl,
+    };
+  })(),
   developerPortal: {
     enabled: developerPortalEnabled,
     email: developerPortalEmail,
