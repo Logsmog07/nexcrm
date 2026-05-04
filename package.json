@@ -4,6 +4,7 @@
   "description": "CRM Analytics & Sales Intelligence System",
   "main": "backend/index.js",
   "scripts": {
+    "start": "node backend/index.js",
     "server": "node backend/index.js",
     "server:dev": "node --watch backend/index.js",
     "client": "npm run dev --prefix frontend",

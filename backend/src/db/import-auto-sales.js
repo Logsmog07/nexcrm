@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const { pool } = require("../config/db");
 
 const CSV_PATH = "/Users/param/Downloads/Auto Sales data.csv";
