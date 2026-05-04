@@ -89,8 +89,30 @@ DB_SSL=false
 # DATABASE_URL=postgresql://USER:PASSWORD@HOST:5432/postgres?sslmode=require
 ```
 
-When deploying the backend to Vercel, set `DATABASE_URL` in Vercel Project → Settings → Environment Variables.
+## 4a. Deploy the backend on Render
+
+Render is the simplest fit for this Express API.
+
+1. Push this repo to GitHub.
+2. In Render, create a new Web Service from the GitHub repo.
+3. Set the root directory to `backend`.
+4. Use these settings:
+   - Build command: `npm install`
+   - Start command: `npm start`
+   - Health check path: `/health`
+5. Add these environment variables in Render:
+   - `NODE_ENV=production`
+   - `DATABASE_URL=postgresql://...` using your Supabase connection string
+   - `JWT_SECRET=` a long random secret
+   - `CLIENT_URL=` your Vercel frontend URL
+   - `CLIENT_URLS=` your Vercel frontend URL, plus any custom domains
+6. Deploy the service.
+
+If you prefer blueprint deployment, this repo now includes [render.yaml](render.yaml).
+
 Do not commit your real `.env` to GitHub.
+
+Important: this backend is not a Vercel serverless function. Vercel is best used for the frontend only.
 
 Developer portal env values (optional):
 
@@ -163,6 +185,20 @@ Frontend URL:
 ```text
 http://localhost:5174
 ```
+
+## 7a. Connect the frontend to the backend
+
+The frontend reads the API URL from `VITE_API_URL` in [frontend/src/api/client.js](frontend/src/api/client.js) and [frontend/src/api/axios.js](frontend/src/api/axios.js).
+
+For production, set this in Vercel:
+
+```env
+VITE_API_URL=https://your-render-service.onrender.com/api
+```
+
+Then redeploy the frontend so Vite bakes the new value into the build.
+
+The frontend must be deployed from the `frontend` folder in the same GitHub repo, or as a separate Vercel project pointed at that folder.
 
 ## 8. Demo login accounts
 
