@@ -11,6 +11,8 @@ const app = express();
 app.disable("x-powered-by");
 
 const localDevOrigins = [
+  "http://localhost:5175",
+  "http://127.0.0.1:5175",
   "http://localhost:5174",
   "http://127.0.0.1:5174",
   "http://localhost:5173",
@@ -32,6 +34,32 @@ const allowedOrigins = [...new Set([
     return [];
   }),
 ])];
+
+const vercelPrefix = String(process.env.CORS_VERCEL_PREFIX || "")
+  .trim()
+  .toLowerCase();
+
+function isAllowedVercelOrigin(origin) {
+  if (!vercelPrefix) {
+    return false;
+  }
+
+  try {
+    const parsed = new URL(origin);
+    if (parsed.protocol !== "https:") {
+      return false;
+    }
+
+    const hostname = parsed.hostname.toLowerCase();
+    if (!hostname.endsWith(".vercel.app")) {
+      return false;
+    }
+
+    return hostname === `${vercelPrefix}.vercel.app` || hostname.startsWith(`${vercelPrefix}-`);
+  } catch {
+    return false;
+  }
+}
 
 function isLocalDevelopmentOrigin(origin) {
   try {
@@ -60,18 +88,33 @@ function isLocalDevelopmentOrigin(origin) {
   }
 }
 
-app.use(
-  cors({
-    origin(origin, callback) {
-      if (!origin || allowedOrigins.includes(origin) || (!env.isProduction && isLocalDevelopmentOrigin(origin))) {
-        return callback(null, true);
-      }
+const corsOptions = {
+  origin(origin, callback) {
+    if (
+      !origin ||
+      allowedOrigins.includes(origin) ||
+      isAllowedVercelOrigin(origin) ||
+      (!env.isProduction && isLocalDevelopmentOrigin(origin))
+    ) {
+      return callback(null, true);
+    }
 
-      return callback(new Error(`Origin not allowed by CORS: ${origin}`));
-    },
-    credentials: true,
-  })
-);
+    // Deny the request without throwing, so we don't surface this as a 500.
+    // The browser will still block the call due to missing CORS headers.
+    return callback(null, false);
+  },
+  credentials: true,
+  optionsSuccessStatus: 204,
+};
+
+app.use(cors(corsOptions));
+app.use((req, res, next) => {
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(204);
+  }
+
+  return next();
+});
 app.use(securityHeaders);
 app.use(express.json({ limit: env.security.jsonLimit }));
 app.use(express.urlencoded({ extended: true, limit: env.security.jsonLimit }));
