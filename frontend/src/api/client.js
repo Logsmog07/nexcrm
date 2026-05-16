@@ -1,9 +1,11 @@
 import axios from "axios";
 import { getApiBaseUrl } from "./baseUrl";
 
+const requestTimeoutMs = Number(import.meta.env.VITE_API_TIMEOUT_MS || 30000);
+
 const client = axios.create({
   baseURL: getApiBaseUrl(),
-  timeout: 10000,
+  timeout: Number.isFinite(requestTimeoutMs) && requestTimeoutMs > 0 ? requestTimeoutMs : 30000,
 });
 
 client.interceptors.request.use((config) => {
