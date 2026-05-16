@@ -10,7 +10,7 @@ import { useNavigate } from "../hooks/useNavigate";
 import { getBranding } from "../lib/branding";
 
 const defaults = {
-  login: { email: "admin@crm.local", password: "Password123!" },
+  login: { email: "", password: "" },
   signup: {
     fullName: "",
     email: "",
@@ -42,13 +42,6 @@ const signupSteps = [
     title: "Launch workspace",
     description: "Review everything and provision your CRM workspace.",
   },
-];
-
-const roleShortcuts = [
-  ["Platform Admin", "admin@crm.local"],
-  ["Company Admin", "companyadmin@crm.local"],
-  ["Manager", "manager@crm.local"],
-  ["Sales", "sales@crm.local"],
 ];
 
 const workspaceSignals = [
@@ -185,7 +178,7 @@ export function AuthPage() {
 
   const subtitle = useMemo(() => {
     if (mode === "login") {
-      return "Use your workspace credentials or a demo account to open the CRM.";
+      return "Use your workspace credentials to open the CRM.";
     }
 
     return signupSteps[signupStep].description;
@@ -266,18 +259,6 @@ export function AuthPage() {
         : form;
 
     const result = await dispatch(action(payload));
-    if (!result.error) {
-      navigate("/");
-    }
-  };
-
-  const handleDemoLogin = async (email) => {
-    setLocalError("");
-    setMode("login");
-    setForm({ email, password: "Password123!" });
-
-    const result = await dispatch(loginUser({ email, password: "Password123!" }));
-
     if (!result.error) {
       navigate("/");
     }
@@ -442,18 +423,20 @@ export function AuthPage() {
                 <ErrorBanner message={localError || error} />
               </div>
 
-              <form className="mt-5 space-y-5" onSubmit={handleSubmit}>
+              <form className="mt-5 space-y-5" onSubmit={handleSubmit} autoComplete="off">
                 {mode === "login" ? (
                   <div className="grid gap-4">
                     <Input
                       placeholder="Email"
                       type="email"
+                      autoComplete="off"
                       value={form.email}
                       onChange={(event) => setForm({ ...form, email: event.target.value })}
                     />
                     <Input
                       placeholder="Password"
                       type="password"
+                      autoComplete="off"
                       value={form.password}
                       onChange={(event) => setForm({ ...form, password: event.target.value })}
                     />
@@ -499,33 +482,12 @@ export function AuthPage() {
 
             <div className="mt-8 border-t border-[var(--border)] pt-6">
               {mode === "login" ? (
-                <>
-                  <div className="mb-3 flex items-center justify-between">
-                    <div className="text-sm font-semibold text-[var(--text-primary)]">Demo accounts</div>
-                    <div className="text-[11px] uppercase tracking-[0.16em] text-[var(--text-secondary)]">
-                      Instant access
-                    </div>
+                <div className="rounded-[18px] border border-[var(--border)] bg-[var(--bg-base)] p-4">
+                  <div className="text-sm font-semibold text-[var(--text-primary)]">Secure access</div>
+                  <div className="mt-2 text-sm leading-6 text-[var(--text-secondary)]">
+                    Sign in with the account created for your workspace.
                   </div>
-
-                  <div className="grid gap-2">
-                    {roleShortcuts.map(([label, email]) => (
-                      <button
-                        key={email}
-                        type="button"
-                        onClick={() => handleDemoLogin(email)}
-                        className="flex items-center justify-between rounded-[16px] border border-[var(--border)] bg-[var(--bg-base)] px-3 py-3 text-left transition hover:border-[var(--accent)]/35 hover:bg-[var(--accent-soft)]"
-                      >
-                        <div>
-                          <div className="text-sm font-semibold text-[var(--text-primary)]">{label}</div>
-                          <div className="mt-0.5 text-xs text-[var(--text-secondary)]">{email}</div>
-                        </div>
-                        <span className="rounded-full border border-[var(--border)] bg-[var(--bg-card)] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-[var(--text-secondary)]">
-                          Demo
-                        </span>
-                      </button>
-                    ))}
-                  </div>
-                </>
+                </div>
               ) : (
                 <div className="rounded-[18px] border border-[var(--border)] bg-[var(--bg-base)] p-4">
                   <div className="text-sm font-semibold text-[var(--text-primary)]">Signup guidance</div>

@@ -37,9 +37,9 @@ export function LoginPage() {
   } = useForm({
     mode: "onTouched",
     defaultValues: {
-      email: "admin@crm.local",
-      password: "Password123!",
-      remember: true,
+      email: "",
+      password: "",
+      remember: false,
     },
   });
 
@@ -143,7 +143,12 @@ export function LoginPage() {
           </div>
 
           <div className="mx-auto flex w-full max-w-md flex-1 items-center">
-            <form className="w-full space-y-5" onSubmit={handleSubmit(onSubmit)} noValidate>
+            <form
+              className="w-full space-y-5"
+              onSubmit={handleSubmit(onSubmit)}
+              autoComplete="off"
+              noValidate
+            >
               <div>
                 <h2 className="text-3xl font-semibold text-[var(--text-primary)]">Welcome back</h2>
                 <p className="mt-2 text-sm text-[var(--text-secondary)]">Sign in to your NexCRM account</p>
@@ -156,6 +161,7 @@ export function LoginPage() {
                   <input
                     className="h-11 w-full rounded-xl border border-[var(--border)] bg-transparent pl-10 pr-3 text-sm text-[var(--text-primary)] outline-none focus:border-indigo-500"
                     type="email"
+                    autoComplete="off"
                     placeholder="you@company.com"
                     {...register("email", {
                       required: "Email is required",
@@ -176,6 +182,7 @@ export function LoginPage() {
                   <input
                     className="h-11 w-full rounded-xl border border-[var(--border)] bg-transparent pl-10 pr-11 text-sm text-[var(--text-primary)] outline-none focus:border-indigo-500"
                     type={showPassword ? "text" : "password"}
+                    autoComplete="off"
                     placeholder="Enter your password"
                     {...register("password", {
                       required: "Password is required",
