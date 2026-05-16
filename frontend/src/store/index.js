@@ -280,6 +280,9 @@ const crmSlice = createSlice({
     setUsers(state, action) {
       state.users = action.payload;
     },
+    setCompanies(state, action) {
+      state.companies = action.payload;
+    },
     setSelectedCompanyId(state, action) {
       state.selectedCompanyId = action.payload;
     },
@@ -357,6 +360,7 @@ export const {
   setActivities,
   setNotifications,
   setUsers,
+  setCompanies,
   setSelectedCompanyId,
 } =
   crmSlice.actions;

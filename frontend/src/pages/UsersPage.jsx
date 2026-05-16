@@ -14,7 +14,7 @@ import { Textarea } from "../components/ui/Textarea";
 import { ErrorBanner } from "../components/common/ErrorBanner";
 import authApi from "../api/authApi";
 import crmApi from "../api/crmApi";
-import { fetchDashboardData, hydrateAuth } from "../store";
+import { fetchDashboardData, hydrateAuth, setCompanies, setUsers } from "../store";
 import { useNavigate } from "../hooks/useNavigate";
 import { StatCard } from "../components/common/StatCard";
 import { isCompanyAdmin, isPlatformAdmin } from "../lib/roles";
@@ -154,7 +154,13 @@ export function UsersPage() {
   };
 
   const refresh = async () => {
-    await dispatch(fetchDashboardData());
+    const [companiesResponse, usersResponse] = await Promise.all([
+      platformAdminView ? crmApi.listCompanies() : Promise.resolve({ data: companies }),
+      crmApi.listUsers(),
+    ]);
+
+    dispatch(setCompanies(companiesResponse.data || []));
+    dispatch(setUsers(usersResponse.data || []));
   };
 
   const handleCompanySubmit = async () => {
