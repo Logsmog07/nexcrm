@@ -206,9 +206,8 @@ const resetUserPassword = async (id, password, actor) => {
   }
 
   if (isPlatformAdmin(actor)) {
-    if (targetUser.platform_role) {
-      throw new ApiError(403, "Platform admin passwords cannot be reset here");
-    }
+    // Platform admins may rotate credentials for any account, including
+    // another platform admin. Deactivation/impersonation remains restricted.
   } else if (isCompanyAdmin(actor)) {
     if (String(targetUser.company_id) !== String(actor.company_id)) {
       throw new ApiError(403, "You can only manage users in your company");

@@ -543,10 +543,6 @@ export function UsersPage() {
                   key: "actions",
                   label: "Actions",
                   render: (user) => {
-                    if (user.role === "platform_admin") {
-                      return null;
-                    }
-
                     const targetCompanyAdmin = user.role === "company_admin";
                     const canManageTarget = platformAdminView || !targetCompanyAdmin;
 
@@ -554,15 +550,19 @@ export function UsersPage() {
                       return <span className="text-xs text-[var(--text-secondary)]">Restricted</span>;
                     }
 
+                    const targetPlatformAdmin = user.role === "platform_admin";
+
                     return (
                       <div className="flex flex-wrap gap-2">
-                        <Button
-                          type="button"
-                          variant="secondary"
-                          onClick={() => handleUserStatus(user.id, !user.is_active)}
-                        >
-                          {user.is_active ? "Deactivate" : "Activate"}
-                        </Button>
+                        {!targetPlatformAdmin ? (
+                          <Button
+                            type="button"
+                            variant="secondary"
+                            onClick={() => handleUserStatus(user.id, !user.is_active)}
+                          >
+                            {user.is_active ? "Deactivate" : "Activate"}
+                          </Button>
+                        ) : null}
                         <Button
                           type="button"
                           variant="secondary"
@@ -576,14 +576,16 @@ export function UsersPage() {
                         >
                           Reset password
                         </Button>
-                        <Button
-                          type="button"
-                          variant="secondary"
-                          disabled={accessingUserId === user.id || !user.is_active}
-                          onClick={() => handleAccessAccount(user)}
-                        >
-                          {accessingUserId === user.id ? "Accessing..." : "Access account"}
-                        </Button>
+                        {!targetPlatformAdmin ? (
+                          <Button
+                            type="button"
+                            variant="secondary"
+                            disabled={accessingUserId === user.id || !user.is_active}
+                            onClick={() => handleAccessAccount(user)}
+                          >
+                            {accessingUserId === user.id ? "Accessing..." : "Access account"}
+                          </Button>
+                        ) : null}
                       </div>
                     );
                   },
